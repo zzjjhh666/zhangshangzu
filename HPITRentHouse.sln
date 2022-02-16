@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPIT.RentHouse.Admin", "HPIT.RentHouse.Admin\HPIT.RentHouse.Admin.csproj", "{1452D2ED-F1A7-403D-A6E6-4F42DE40C235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPIT.RentHouse.Common", "HPIT.RentHouse.Common\HPIT.RentHouse.Common.csproj", "{35227A52-8FC8-48E9-ABC9-EB7BF6C6EB24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPIT.RentHouse.DTO", "HPIT.RentHouse.DTO\HPIT.RentHouse.DTO.csproj", "{EC1C32FE-CE1D-4C02-A8EB-FF299A56B8EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPIT.RentHouse.lService", "HPIT.RentHouse.lService\HPIT.RentHouse.lService.csproj", "{3281A6A8-BC7C-4D49-B49B-DA92BB444410}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPIT.RentHouse.Service", "HPIT.RentHouse.Service\HPIT.RentHouse.Service.csproj", "{34E47533-41F7-4232-9E35-F5147956D8F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "文件", "文件", "{853D27A5-AD1B-4AF1-B32F-D9738B7528D3}"
+	ProjectSection(SolutionItems) = preProject
+		RentHouse.sql = RentHouse.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1452D2ED-F1A7-403D-A6E6-4F42DE40C235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1452D2ED-F1A7-403D-A6E6-4F42DE40C235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1452D2ED-F1A7-403D-A6E6-4F42DE40C235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1452D2ED-F1A7-403D-A6E6-4F42DE40C235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35227A52-8FC8-48E9-ABC9-EB7BF6C6EB24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35227A52-8FC8-48E9-ABC9-EB7BF6C6EB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35227A52-8FC8-48E9-ABC9-EB7BF6C6EB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35227A52-8FC8-48E9-ABC9-EB7BF6C6EB24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1C32FE-CE1D-4C02-A8EB-FF299A56B8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1C32FE-CE1D-4C02-A8EB-FF299A56B8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1C32FE-CE1D-4C02-A8EB-FF299A56B8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1C32FE-CE1D-4C02-A8EB-FF299A56B8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3281A6A8-BC7C-4D49-B49B-DA92BB444410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3281A6A8-BC7C-4D49-B49B-DA92BB444410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3281A6A8-BC7C-4D49-B49B-DA92BB444410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3281A6A8-BC7C-4D49-B49B-DA92BB444410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E47533-41F7-4232-9E35-F5147956D8F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E47533-41F7-4232-9E35-F5147956D8F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E47533-41F7-4232-9E35-F5147956D8F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E47533-41F7-4232-9E35-F5147956D8F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8E46A21-8703-43CA-A41A-CE48A267FAA4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>房源管理
+        <span class="c-gray en">&gt;</span>整租管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="text-c">
+                <input type="text" class="input-text" style="width:250px" placeholder="小区名称" id="pname" name="">
+                <button type="submit" class="btn btn-success" id="btn_Search" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索小区</button>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l">
+                    <a href="javascript:;" id="deleteBatch" class="btn btn-danger radius">
+                        <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
+                    </a>
+                    <a href="javascript:;" onclick='admin_user("添加管理员","@Url.Action("Add", "RentalController")","700")' class="btn btn-primary radius" id="btn_Add">
+                        <i class="Hui-iconfont">&#xe600;</i> 添加房源
+                    </a>
+                </span>
+            </div>
+            <table class="table table-border table-bordered table-bg" id="table">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="7">房源列表</th>
+                    </tr>
+                    <tr class="text-c">
+                        <th width="25"><input type="checkbox" value="" id="checkall"></th>
+                        <th width="40">区域</th>
+                        <th width="40">小区名</th>
+                        <th width="40">地段</th>
+                        <th width="40">租金</th>
+                        <th width="40">房型</th>
+                        <th width="40">装修</th>
+                        <th width="40">面积</th>
+                        <th width="70">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </article>
+    </div>
+</section>
+
+@section footScript{
+    <script type="text/javascript">
+
+        $(function () {
+            //设置导航栏选中样式
+            $("#adminuser").parent().parent().prev().addClass("selected");
+            $("#adminuser").parent().parent().css("display", "block");
+            $("#adminuser").addClass("current");
+
+            getData();
+        })
+        function admin_user(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }
+        //获取分页数据,通过datatalbe渲染列表
+        var table;
+        function getData() {
+            var params = {};
+            table = $("#table").DataTable({
+                lengthChange:true,//是否显示每页大小的下拉框
+                info: true, //是否显示页数信息
+                processing: true, //显示加载中提示....
+                ordering: false,//是否排序
+                searching: false,//是否显示默认的搜索
+                paging: true,//是否显示分页
+                serverSide: true,//开启服务器模式,通过ajax从服务器获取数据
+
+                //设置特定列的初始化属性
+                columns: [
+                    { data: '' },//设置单元格里的值
+                    { data: 'Name' },
+                    { data: 'PhoneNum' },
+                    { data: 'Email' },
+                    { data: 'LoginErrorTimes' },
+                    { data: 'CityId' },
+                    {
+                        data: 'Id',
+                        render: function (data, type, full, callback) {
+                            return (' <a title="编辑" href="javascript:;" data-id=' + data + ' class="ml-5 edit"  style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除"  href="javascript:;"  data-id=' + data + ' class="ml-5 delete" style="text-decoration:none"> <i class="Hui-iconfont">&#xe6e2;</i></a>   ')
+                        }
+                    }
+                ],
+
+                //自定义列
+                columnDefs: [{
+                    targets: 0,//列的索引，从0开始
+                    render: function (data, type, row, meta) {
+                        return '<input type="checkbox" class="chk" value="' + row.Id + '" name="selectIDs">';
+                    }
+                }],
+
+                //添加回调函数
+                createdRow: function (row, data, index) {
+                    /* 设置表格中的内容居中 */
+                    $('td', row).attr("class", "text-c");//在row这个元素里面查找td,并添加样式
+                },
+
+                //使用ajax异步请求
+                ajax: {
+                    type: 'POST',
+                    url: '@Url.Action("GetList", "RentalController")',
+                    //发送给服务器的数据
+                    data: function (d) {
+                        console.log(d)
+                        params.start = d.start;//开始的序号
+                        params.length = d.length;//要取的数据的条数
+                        params.name = $("#pname").val();//输入的关键字
+                        return params;//自定义需要传递的参数。
+                    }
+                }
+            });
+        }
+
+        //搜索
+        $("#btn_Search").click(function () {
+            //使datatable重新请求
+            table.ajax.reload();
+        });
+        //修改
+        @*$(".edit").livequery('click', function () {
+            var id = $(this).attr("data-id");
+            layer_show("修改管理员", "@Url.Action("Edit", "AdminUsers")?id=" + id, "800","500")
+        });*@
+         //删除
+        @*$(".delete").livequery('click', function () {
+            var id = $(this).attr("data-id");
+            layer.confirm('确认删除该数据?', { icon: 3, title: '提示' }, function
+                (index) {
+                $.post("@Url.Action("Delete", "AdminUsers")", { id: id }, function
+                    (data) {
+                    if (data.State == 1) {
+                        location.reload();
+                    } else {
+                        layer.msg(data.ErrorMessage, { icon: 2 });
+                    }
+                })
+            });
+        });*@
+        //批量删除
+        @*$("#deleteBatch").click(function () {
+            var ids = [];
+            $(":checkbox[name='selectIDs']:checked").each(function () {
+                var id = $(this).val();
+                ids.push(id);
+            })
+            if (ids.length == 0) {
+                layer.msg("请选择要删除的项");
+                return;
+            }
+            layer.confirm("确认是否删除", { icon: 3, title: "删除提示" }, function () {
+                $.post("@Url.Action("DeleteBatch", "AdminUsers")", { ids: ids },
+                    function (data) {
+                        if (data.State == 1) {
+                            location.reload();
+                        } else {
+                            layer.msg(data.ErrorMessage, { icon: 2 });
+                        }
+                    })
+            })
+        });*@
+        //全选
+        $("#checkall").click(function () {
+            $(".chk").prop("checked", this.checked)
+        });
+        setTimeout(function () {
+            $(".chk").click(function () {
+                var checkAll = $(".chk").length == $(".chk:checked").length ? true : false
+                $("#checkall").prop("checked", checkAll)
+            });
+        }, 1000);
+    </script>
+}
