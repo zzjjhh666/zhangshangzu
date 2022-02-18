@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    var typeId = ViewBag.typeId;
+    string layout_id = "";
+    string type_name = "";
+    if (typeId == 12)
+    {
+        layout_id = "whole";
+        type_name = "整租管理";
+    }
+    else if (typeId == 11)
+    {
+        layout_id = "sharing";
+        type_name = "合租管理";
+    }
+    else
+    {
+        layout_id = "short";
+        type_name = "短租管理";
+    }
+}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 房源管理 <span class="c-gray en">&gt;</span> @type_name <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="Hui-article">
+        <div class="cl pd-20">
+            <div class="text-c">
+
+                <input type="text" class="input-text" style="width:250px" id="txt_communityName" placeholder="输入小区名称">
+                <button class="btn btn-success" id="btn_Search"><i class="Hui-iconfont">&#xe665;</i> 搜小区</button>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l">
+                    <a href="javascript:;" id="btn_Add" class="btn btn-primary radius">
+                        <i class="Hui-iconfont">&#xe600;</i> 添加房源
+                    </a>
+                    @*<a href="javascript:;" id="btn_Create" class="btn btn-primary radius">
+                            <i class="Hui-iconfont">&#xe600;</i> 一键全部生成静态页
+                        </a>*@
+                </span>
+
+            </div>
+            <table id="table" class="table table-border table-bordered table-bg">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="9">房源列表</th>
+                    </tr>
+                    <tr class="text-c">
+                        <th width="25"><input type="checkbox" name="" value=""></th>
+
+                        <th width="200">区域</th>
+                        <th width="200">小区名</th>
+                        <th width="200">地段</th>
+                        <th width="200">租金</th>
+                        <th width="200">房型</th>
+                        <th width="200">装修</th>
+                        <th width="100">面积</th>
+                        <th width="200">操作</th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+
+</section>
+@section footScript{
+    <script>
+        $(function () {
+            $("#" + "@layout_id").parent().parent().prev().addClass("selected");
+            $("#" + "@layout_id").parent().parent().css("display", "block");
+            $("#" + "@layout_id").addClass("current");
+
+            getData();
+        })
+
+        var table;
+        function getData() {
+            var params = {};
+            table = $("#table").DataTable({
+                lengthChange: true,//是否显示每页大小的下拉框
+                info: true, //是否显示页数信息
+                processing: true, //显示加载中提示....
+                ordering: false,//是否排序
+                searching: false,//是否显示默认的搜索
+                paging: true,//是否显示分页
+                serverSide: true,//开启服务器模式,通过ajax从服务器获取数据
+
+                //使用对象数组，一定要配置columns，告诉 DataTables 每列对应的属性
+                columns: [
+                    { data: 'Id', },
+                    { data: 'RegionName' },
+                    { data: 'CommunityName' },
+                    { data: 'Address' },
+                    { data: 'MonthRent' },
+                    { data: 'RoomTypeName' },
+                    { data: 'DecorateStatusName' },
+                    { data: 'Area' },
+                    {
+                        data: 'Id', render: function (data, type, full, callback) {
+                            return (' <a title="编辑" href="javascript:;" data-id=' + data + '  class="ml-5 edit" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="上传" href="javascript:;"  data-id=' + data + '  class="ml-5 upload" style="text-decoration:none"><i class="Hui-iconfont">&#xe642;</i></a><a title="查看" href="javascript:;" data-id=' + data + '  class="ml-5 lookPic" style="text-decoration:none"><i class="Hui-iconfont">&#xe613;</i></a> ')
+                        }
+                    }
+                ],
+                createdRow: function (row, data, index) {
+                    /* 设置表格中的内容居中 */
+                    $('td', row).attr("class", "text-c");
+                },
+                //开启服务器模式
+                serverSide: true,
+                //使用ajax异步请求
+                ajax: {
+                    type: 'POST',
+                    url: '@Url.Action("GetHouseList", "Houses")',
+                    data: function (d) {
+                        params.typeId = "@typeId";//房源类型
+                        params.start = d.start;//开始的序号
+                        params.length = d.length;//要取的数据的条数
+                        params.communityName = $("#txt_communityName").val();//输入的关键字
+                        return params;//自定义需要传递的参数。
+                    }
+                },
+                //自定义列
+                columnDefs: [{
+                    targets: 0,
+                    render: function (data, type, row, meta) {
+                        return '<input type="checkbox" value="' + row.Id + '" name="selectIDs">';
+                    }
+                }]
+            });
+        }
+
+
+        $("#btn_Search").click(function () {
+            table.ajax.reload();
+        });
+
+        //添加房源
+        $("#btn_Add").click(function () {
+            layer_show("添加房源", "@Url.Action("Add", "Houses")", 950, 600);
+        });
+
+        //编辑房源
+        $(".edit").livequery("click", function () {
+            //获取要编辑的id
+            var id = $(this).attr("data-id");
+            //弹出编辑对话框
+            layer_show("编辑房源", "@Url.Action("Edit", "Houses")?id=" + id, "950", "600");
+        });
+
+        //上传图片
+        $(".upload").livequery("click", function () {
+            //获取要房源的id
+            var id = $(this).attr("data-id");
+            //弹出上传图片对话框
+            layer_show("上传图片", "@Url.Action("UploadPic", "Houses")?houseId=" + id, "800", "600");
+        });
+
+        //查看图片
+        $(".lookPic").livequery("click", function () {
+            //获取要房源的id
+            var id = $(this).attr("data-id");
+            //弹出查看图片对话框
+            layer_show("查看图片", "@Url.Action("LookPic", "Houses")?houseId=" + id, "800", "500");
+        });
+
+        //生成静态页
+        $("#btn_Create").click(function () {
+            $.post("@Url.Action("CreateStaticPage", "Houses")", null, function (data) {
+                if (data.State == 1) {
+                    //弹出提示信息
+                    layer.msg(data.ErrorMessage, { icon: 1 });
+                }
+                else {
+                    layer.msg(data.ErrorMessage, { icon: 5 });
+                }
+
+            }, "json");
+
+        });
+    </script>
+}
+

@@ -17,5 +17,6 @@ namespace HPIT.RentHouse.lService
         AjaxResult Edit(PermissionDTO permission);
         AjaxResult Delete(long id);
         AjaxResult DeleteBatch(List<long> ids);
+        List<PermissionDTO> GetListByUser(long UserId);
     }
 }

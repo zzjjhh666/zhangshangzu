@@ -45,9 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAdminUsersService.cs" />
+    <Compile Include="ICommunityService.cs" />
+    <Compile Include="IHousesService.cs" />
+    <Compile Include="IIdNameServcie.cs" />
     <Compile Include="ILoginService.cs" />
     <Compile Include="IPermissionsService.cs" />
-    <Compile Include="IRental.cs" />
+    <Compile Include="IRegionService.cs" />
     <Compile Include="IServiceSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRolesService.cs" />

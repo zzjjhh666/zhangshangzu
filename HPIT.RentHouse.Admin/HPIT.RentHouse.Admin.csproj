@@ -494,9 +494,12 @@
     <Compile Include="Content\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
     <Compile Include="Controllers\AdminUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HousesController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\RentalController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Filters\CheckMyPermissionAttribute.cs" />
+    <Compile Include="Filters\ExceptionAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1063,6 +1066,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Rental\Index.cshtml" />
+    <Content Include="Views\Houses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

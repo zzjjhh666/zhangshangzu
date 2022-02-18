@@ -10,12 +10,7 @@ namespace HPIT.RentHouse.lService
 {
     public interface ILoginService:IServiceSupport
     {
-        /// <summary>
-        /// 登录
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        AjaxResult Login(LoginDTO dto);
+        
     }
 }
 

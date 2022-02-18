@@ -28,5 +28,11 @@ namespace HPIT.RentHouse.lService
         /// <param name="ids"></param>
         /// <returns></returns>
         AjaxResult DeleteBatch(List<long> ids);
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="dtO"></param>
+        /// <returns></returns>
+        AjaxResult Login(LoginDTO dtO);
     }
 }

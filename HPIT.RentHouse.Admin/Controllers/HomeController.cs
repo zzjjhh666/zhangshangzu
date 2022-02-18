@@ -13,10 +13,10 @@ namespace HPIT.RentHouse.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        private ILoginService _loginService;
-        public HomeController(ILoginService loginService) 
+        private IAdminUsersService _adminUsersService;
+        public HomeController(IAdminUsersService adminUsersService) 
         {
-            _loginService = loginService;
+            _adminUsersService = adminUsersService;
         }
         public ActionResult Index()
         {
@@ -58,7 +58,7 @@ namespace HPIT.RentHouse.Admin.Controllers
                 }
                 else
                 {
-                    var result = _loginService.Login(dto);
+                    var result = _adminUsersService.Login(dto);
                     return Json(result);
                 }
             }

@@ -64,7 +64,7 @@ namespace HPIT.RentHouse.Service
         {
             var db = new RentHouseEntity();
             BaseService<T_Permissions> bs = new BaseService<T_Permissions>(db);
-            T_Permissions model = bs.Get(a => a.Id == id);//少了个等于号，一个等于号是赋值，两个等于号是变量比较
+            T_Permissions model = bs.Get(a => a.Id == id);
             PermissionDTO dto = new PermissionDTO();
             if (model != null)
             {
@@ -73,6 +73,11 @@ namespace HPIT.RentHouse.Service
             }
             return dto;
         }
+        /// <summary>
+        /// 修改权限
+        /// </summary>
+        /// <param name="permission"></param>
+        /// <returns></returns>
         public AjaxResult Edit(PermissionDTO permission)
         {
             var db = new RentHouseEntity();
@@ -90,7 +95,11 @@ namespace HPIT.RentHouse.Service
                 return new AjaxResult(ResultState.Error, "权限修改失败");
             }
         }
-
+        /// <summary>
+        /// 删除权限
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public AjaxResult Delete(long id)
         {
             var db = new RentHouseEntity();
@@ -105,7 +114,11 @@ namespace HPIT.RentHouse.Service
                return new AjaxResult(ResultState.Error, "权限删除失败");
             }
         }
-
+        /// <summary>
+        /// 批量删除权限
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
         public AjaxResult DeleteBatch(List<long> ids)
         {
             try
@@ -125,6 +138,30 @@ namespace HPIT.RentHouse.Service
                 return new AjaxResult(ResultState.Error, "权限删除失败");
             }
             
+        }
+        /// <summary>
+        /// 获取用户权限
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public List<PermissionDTO> GetListByUser(long UserId)
+        {
+            var db = new RentHouseEntity();
+            BaseService<T_AdminUsers> bs = new BaseService<T_AdminUsers>(db);
+            var user = bs.Get(b => b.Id == UserId);
+            List<T_Roles> roleList = user.T_Roles.ToList();
+            List<PermissionDTO> permissionList = new List<PermissionDTO>();
+            foreach (var role in roleList)
+            {
+                var result = role.T_Permissions.Select(a => new PermissionDTO
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description
+                });
+                permissionList.AddRange(result);
+            }
+            return permissionList;
         }
     }
 }
