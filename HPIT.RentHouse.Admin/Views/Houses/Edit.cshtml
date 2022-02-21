@@ -1,0 +1,209 @@
+﻿﻿@using HPIT.RentHouse.DTO;
+@model HPIT.RentHouse.DTO.HousesEditDTO
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+
+    var attachmentList = ViewBag.AttachmentList as List<AttachmentDTO>;
+}
+
+<style>
+    .row > label, .row > div {
+        display: inline-block;
+    }
+</style>
+
+<article class="cl pd-20">
+    <form class="form form-horizontal" id="houseAddForm" autocomplete="off">
+        @Html.HiddenFor(a => a.Id)
+        <div class="row cl">
+            <label class="form-label col-2"><span class="c-red">*</span>区域：</label>
+            <div class="formControls col-2">
+                <span class="select-box">
+                    @Html.DropDownListFor(e => e.RegionId, ViewBag.RegionList as IEnumerable<SelectListItem>, "==请选择==", new { @class = "select" })
+                </span>
+            </div>
+            <label class="form-label col-1">小区：</label>
+            <div class="formControls col-2">
+                @Html.DropDownListFor(e => e.CommunityId, ViewBag.CommunityList as IEnumerable<SelectListItem>, "==请选择==", new { @class = "select" })
+            </div>
+            <label class="form-label col-1">房型：</label>
+            <div class="formControls col-2 skin-minimal">
+                @Html.DropDownListFor(e => e.RoomTypeId, ViewBag.RoomTypeList as IEnumerable<SelectListItem>, "==请选择==", new { @class = "select" })
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-2">地址：</label>
+            <div class="formControls col-5">
+
+                <input type="text" class="input-text" placeholder="详细地址" name="Address" value="@Model.Address" datatype="*" nullmsg="地址不能为空">
+            </div>
+            <label class="form-label col-2">月租金：</label>
+            <div class="formControls col-2 skin-minimal">
+                <input type="text" class="input-text" name="MonthRent" value="@Model.MonthRent" datatype="n" nullmsg="租金要三思呀">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-2"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-2">
+                <span class="select-box">
+                    @Html.DropDownListFor(e => e.StatusId, ViewBag.StatusList as IEnumerable<SelectListItem>, "==请选择==", new { @class = "select" })
+                </span>
+            </div>
+            <label class="form-label col-2">面积：</label>
+            <div class="formControls col-2">
+                <input type="text" class="input-text" placeholder="平米" value="@Convert.ToInt32(Model.Area)" name="Area" datatype="n" nullmsg="面积要三思呀">
+            </div>
+            <label class="form-label col-1">装修：</label>
+            <div class="formControls col-2 skin-minimal">
+                @Html.DropDownListFor(e => e.DecorateStatusId, ViewBag.DecorateStatusList as IEnumerable<SelectListItem>, "==请选择==", new { @class = "select" })
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-2"><span class="c-red">*</span>楼层：</label>
+            <div class="formControls col-1">
+                <input type="text" class="input-text" placeholder="所在层" value="@Model.FloorIndex" name="FloorIndex" datatype="n" nullmsg="几楼呢">
+
+            </div>
+            <div class="formControls col-1">
+                <input type="text" class="input-text" placeholder="总层数" value="@Model.TotalFloorCount" name="TotalFloorCount" datatype="n" nullmsg="几楼呢">
+
+            </div>
+
+            <label class="form-label col-2">类别：</label>
+            <div class="formControls col-2 skin-minimal">
+                @Html.DropDownListFor(e => e.TypeId, ViewBag.TypeList as IEnumerable<SelectListItem>, "==请选择==", new { @class = "select" })
+            </div>
+
+            <label class="form-label col-1">朝向：</label>
+            <div class="formControls col-2 skin-minimal">
+                <input type="text" class="input-text" name="Direction" value="@Model.Direction" datatype="*" nullmsg="朝向是哪里">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-2">可看房时间：</label>
+            <div class="formControls col-2">
+                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:180px;" value="@Model.LookableDateTime" name="LookableDateTime" datatype="*" nullmsg="好好填写时间">
+            </div>
+            <label class="form-label col-2">入住时间：</label>
+            <div class="formControls col-2">
+                <input type="text" name="CheckInDateTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" style="width:180px;" value="@Model.CheckInDateTime" datatype="*" nullmsg="好好填写时间">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-2">业主姓名：</label>
+            <div class="formControls col-2">
+                <input type="text" class="input-text" value="@Model.OwnerName" name="OwnerName" datatype="*" nullmsg="业主叫什么">
+            </div>
+            <label class="form-label col-2">业主电话：</label>
+            <div class="formControls col-2">
+                <input type="text" class="input-text" name="OwnerPhoneNum" value="@Model.OwnerPhoneNum" datatype="m" nullmsg="电话不要胡写嘛">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-2">房源描述：</label>
+            <div class="formControls col-9">
+                @*<textarea class="textarea" name="Description" datatype="*" nullmsg="房源描述也要写的"></textarea>*@
+
+                <!-- 加载编辑器的容器 -->
+                <script id="HouseDescription" name="Description" type="text/plain">
+
+                    @Html.Raw(Model.Description)
+
+                </script>
+
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-2">配置设置：</label>
+            <div class="formControls col-8">
+                @foreach (var item in Model.HouseAttachments)
+                {
+                    <input type="checkbox" id="AttachmentId_@item.AttachmentId" name="AttachmentIds" checked="@item.IsUsed" value="@item.AttachmentId" />
+                    <label for="AttachmentId_@item.AttachmentId">@item.Name</label>}
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-10 col-offset-2">
+                <button class="btn btn-primary radius" type="button" id="btn_Save"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+
+            </div>
+        </div>
+        @Html.HiddenFor(e => e.Id);
+    </form>
+</article>
+@section footScript
+{
+    <script src="~/Content/h-ui/lib/Validform/5.3.2/Validform.min.js"></script>
+    <script src="~/Content/ueditor/1.4.3/ueditor.config.js"></script>
+    <script src="~/Content/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script src="~/Content/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+    <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
+    <script>
+
+        $(function () {
+
+            //实例化编辑器
+            var ue = UE.getEditor('HouseDescription');
+
+            //对用户输入的信息进行校验
+            //初始化验证插件
+            var validform = $("#houseAddForm").Validform({ tiptype: 2 });
+
+            $("#btn_Save").click(function () {
+
+                var formObj = $("#houseAddForm").serializeArray();
+
+                //当验证通过的时候发送ajax请求
+                if (validform.check(false)) {
+
+                    $.post("@Url.Action("Edit", "Houses")", formObj, function (data) {
+                        if (data.State == 1) {
+                            //弹出提示信息
+                            layer.msg('修改成功', { icon: 1 });
+                            //关闭遮罩层
+                            //刷新列表
+                            parent.location.reload();
+                        }
+                        else {
+                            layer.msg(data.ErrorMessage, { icon: 5 });
+                        }
+
+                    }, "json");
+                }
+
+            });
+
+
+            //区域-小区联动
+            $("#RegionId").change(function () {
+                //获取当前选择的Id
+                var regionId = $(this).val();
+                if (regionId) {
+                    //发送ajax请求获取小区信息
+                    $.post("/House/GetCommunities", { regionId: regionId }, function (data) {
+
+                        //清空现有的校区信息
+                        $("#CommunityId").empty();
+
+                        //添加新的option
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var option = "<option value=" + item.Id + ">" + item.Name + "</option>";
+
+                            $("#CommunityId").append(option);
+                        }
+                    }, "json");
+                }
+            });
+
+
+
+
+        });
+
+    </script>
+}
+

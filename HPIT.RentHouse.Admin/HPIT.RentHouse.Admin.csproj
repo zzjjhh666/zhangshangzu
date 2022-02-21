@@ -1067,6 +1067,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Rental\Index.cshtml" />
     <Content Include="Views\Houses\Index.cshtml" />
+    <Content Include="Views\Houses\Add.cshtml" />
+    <Content Include="Views\Houses\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

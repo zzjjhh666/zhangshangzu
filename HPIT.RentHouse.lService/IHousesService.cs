@@ -1,4 +1,5 @@
-﻿using HPIT.RentHouse.DTO;
+﻿using HPIT.RentHouse.Common;
+using HPIT.RentHouse.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,24 @@ namespace HPIT.RentHouse.lService
         /// </summary>
         /// <returns></returns>
         List<AttachmentDTO> GetAttachmentList();
+        /// <summary>
+        /// 添加房源
+        /// </summary>
+        /// <param name="houses"></param>
+        /// <returns></returns>
+        AjaxResult Add(HousesAddDTO houses);
+        /// <summary>
+        /// 根据id获取房源信息
+        /// </summary>
+        /// <param name="id">房源id</param>
+        /// <returns></returns>
+        HousesEditDTO GetHouse(long id);
+
+        /// <summary>
+        /// 更新房源信息
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        AjaxResult EditHouse(HousesEditDTO dto);
     }
 }
