@@ -222,5 +222,80 @@ namespace HPIT.RentHouse.Service
                 return new AjaxResult(ResultState.Error, "当前房源信息不存在");
             }
         }
+        /// <summary>
+        /// 添加房源图片
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public AjaxResult AddHousePic(HousesPicDTO dto)
+        {
+            using (var db = new RentHouseEntity())
+            {
+                BaseService<T_HousePics> bs = new BaseService<T_HousePics>(db);
+                var model = new T_HousePics
+                {
+                    CreateDateTime = DateTime.Now,
+                    HouseId = dto.HouseId,
+                    ThumbUrl = dto.ThumbUrl,
+                    Url = dto.Url
+                };
+                long id = bs.Add(model);
+                if (id > 0)
+                {
+                    return new AjaxResult(ResultState.Success, "添加图片成功");
+                }
+                else
+                {
+                    return new AjaxResult(ResultState.Error, "添加图片败");
+                }
+
+            }
+        }
+        /// <summary>
+        /// 获取房源图片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<HousesPicDTO> GetHousePics(long id)
+        {
+            using (var db = new RentHouseEntity())
+            {
+                var bs = new BaseService<T_HousePics>(db);
+                var list = bs.GetList(a => a.HouseId == id).Select(e => new HousesPicDTO
+                {
+                    Id = e.Id,
+                    HouseId = e.Id,
+                    ThumbUrl = e.ThumbUrl,
+                    Url = e.Url
+                }).ToList();
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// 批量删除房源图片
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public AjaxResult DeleteHousePic(List<long> ids)
+        {
+            try
+            {
+                var db = new RentHouseEntity();
+                BaseService<T_HousePics> bs = new BaseService<T_HousePics>(db);
+                foreach (var id in ids)
+                {
+                    //1、通过id获取ef中的model
+                    //2、删除该model
+                    var model = bs.Get(e => e.Id == id);
+                    bs.Delete(model);
+                }
+                return new AjaxResult(ResultState.Success, "删除成功");
+            }
+            catch (Exception)
+            {
+                return new AjaxResult(ResultState.Error, "删除失败");
+            }
+        }
     }
 }

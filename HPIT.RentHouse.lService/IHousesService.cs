@@ -40,5 +40,24 @@ namespace HPIT.RentHouse.lService
         /// <param name="dto"></param>
         /// <returns></returns>
         AjaxResult EditHouse(HousesEditDTO dto);
+        /// <summary>
+        /// 添加房源图片
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        AjaxResult AddHousePic(HousesPicDTO dto);
+        /// <summary>
+        /// 获取房源图片
+        /// </summary>  
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<HousesPicDTO> GetHousePics(long id);
+
+        /// <summary>
+        /// 批量删除房源图片
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        AjaxResult DeleteHousePic(List<long> ids);
     }
 }

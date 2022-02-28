@@ -57,6 +57,9 @@
     <Reference Include="CaptchaGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CaptchaGen.1.0.0\lib\net40\CaptchaGen.dll</HintPath>
     </Reference>
+    <Reference Include="CodeCarvings.Piczard, Version=1.2.3.0, Culture=neutral, PublicKeyToken=88d00d4422733d60, processorArchitecture=MSIL">
+      <HintPath>..\packages\CodeCarvings.Piczard.1.2.3.3\lib\CodeCarvings.Piczard.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -504,6 +507,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\PageModel.cs" />
+    <Compile Include="piczardUserControls\simpleImageUploadUserControl\SimpleImageUpload.ascx.cs">
+      <DependentUpon>SimpleImageUpload.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="piczardUserControls\simpleImageUploadUserControl\SimpleImageUpload.ascx.designer.cs">
+      <DependentUpon>SimpleImageUpload.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="piczardUserControls\simpleImageUploadUserControl\upload.aspx.cs">
+      <DependentUpon>upload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="piczardUserControls\simpleImageUploadUserControl\upload.aspx.designer.cs">
+      <DependentUpon>upload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1001,6 +1018,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\watermark.jpg" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\blank.gif" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\SimpleImageUpload.ascx" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\simpleImageUpload.js" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\upload.aspx" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\wait.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="log4net.config" />
@@ -1030,6 +1053,9 @@
     <Content Include="Content\webuploader\0.1.5\images\progress.psd" />
     <Content Include="Content\webuploader\0.1.5\images\Thumbs.db" />
     <Content Include="Content\webuploader\0.1.5\README.md" />
+    <Content Include="App_Data\__CCPZTF_78d3a7c598904cd48d0447186ad55482__wt.tmp" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\preview.ashx" />
+    <Content Include="piczardUserControls\simpleImageUploadUserControl\uploadMonitor.ashx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1069,10 +1095,10 @@
     <Content Include="Views\Houses\Index.cshtml" />
     <Content Include="Views\Houses\Add.cshtml" />
     <Content Include="Views\Houses\Edit.cshtml" />
+    <Content Include="Views\Houses\UploadPic.cshtml" />
+    <Content Include="Views\Houses\LookPic.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,59 @@
+﻿﻿﻿@model List<HPIT.RentHouse.DTO.HousesPicDTO>
+@{
+    ViewBag.Title = "LookPic";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="~/Content/lightbox2/2.8.1/css/lightbox.css" rel="stylesheet" />
+
+<article class="cl pd-20">
+    <div class="pd-20">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:;" id="deleteBatch" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+            </span>
+        </div>
+        <div class="portfolio-content">
+            <ul class="cl portfolio-area">
+                @foreach (var item in Model)
+                {
+                    <li class="item">
+                        <div class="portfoliobox">
+                            <input class="checkbox" name="selectIds" type="checkbox" value="@item.Id">
+                            <div class="picbox"><a href="@item.Url" data-lightbox="example-set" data-title=""><img src="@item.ThumbUrl"></a></div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</article>
+<script src="~/Content/lightbox2/2.8.1/js/lightbox-plus-jquery.min.js"></script>
+
+@section footscript
+{
+    <script>
+                //批量删除
+        $("#deleteBatch").click(function () {
+            var ids = [];
+            $(":checkbox[name='selectIds']:checked").each(function () {
+                var id = $(this).val();
+                ids.push(id);
+            })
+            if (ids.length == 0) {
+                layer.msg("请选择要删除的项");
+                return;
+            }
+            layer.confirm("确认是否删除", { icon: 3, title: "删除提示" }, function () {
+                $.post("@Url.Action("DeleteBatch", "Houses")", { ids: ids }, function (data) {
+                    if (data.State == 1) {
+                        location.reload();
+                    } else {
+                        layer.msg(data.ErrorMessage, { icon: 2 });
+                    }
+                })
+            })
+        })
+    </script>
+}
+
