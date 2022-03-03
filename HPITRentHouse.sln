@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "文件", "文件", "{853D27
 		RentHouse.sql = RentHouse.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPIT.RentHouse.Web", "HPIT.RentHouse.Web\HPIT.RentHouse.Web.csproj", "{ABC6E293-D18B-428E-A6B8-0D8AF655D5B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{34E47533-41F7-4232-9E35-F5147956D8F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E47533-41F7-4232-9E35-F5147956D8F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E47533-41F7-4232-9E35-F5147956D8F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABC6E293-D18B-428E-A6B8-0D8AF655D5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC6E293-D18B-428E-A6B8-0D8AF655D5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABC6E293-D18B-428E-A6B8-0D8AF655D5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC6E293-D18B-428E-A6B8-0D8AF655D5B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

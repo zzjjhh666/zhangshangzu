@@ -497,6 +497,7 @@
     <Compile Include="Content\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
     <Compile Include="Controllers\AdminUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HouseAppointmentController.cs" />
     <Compile Include="Controllers\HousesController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\RentalController.cs" />
@@ -1097,6 +1098,7 @@
     <Content Include="Views\Houses\Edit.cshtml" />
     <Content Include="Views\Houses\UploadPic.cshtml" />
     <Content Include="Views\Houses\LookPic.cshtml" />
+    <Content Include="Views\HouseAppointment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

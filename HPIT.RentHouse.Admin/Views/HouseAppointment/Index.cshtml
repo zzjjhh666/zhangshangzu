@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>租房预约管理
+        <span class="c-gray en">&gt;</span>预约订单管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <table class="table table-border table-bordered table-bg" id="table">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="9">预约看房列表</th>
+                    </tr>
+                    <tr class="text-c">
+                        <th width="40">姓名</th>
+                        <th width="70">电话</th>
+                        <th width="40">预约时间</th>
+                        <th width="40">看房时间</th>
+                        <th width="70">小区</th>
+                        <th width="70">地址</th>
+                        <th width="50">状态</th>
+                        <th width="50">跟进员工</th>
+                        <th width="50">接单</th>
+                    </tr>
+                </thead>
+            </table>
+        </article>
+    </div>
+</section>
+
+@section footScript{
+    <script type="text/javascript">
+
+        $(function () {
+            //设置导航栏选中样式
+            $("#appointment").parent().parent().prev().addClass("selected");
+            $("#appointment").parent().parent().css("display", "block");
+            $("#appointment").addClass("current");
+
+            getData();
+        })
+
+        //获取分页数据,通过datatalbe渲染列表
+        var table;
+        function getData() {
+            var params = {};
+            table = $("#table").DataTable({
+                lengthChange:false,//是否显示每页大小的下拉框
+                info: true, //是否显示页数信息
+                processing: true, //显示加载中提示....
+                ordering: false,//是否排序
+                searching: false,//是否显示默认的搜索
+                paging: true,//是否显示分页
+                serverSide: true,//开启服务器模式,通过ajax从服务器获取数据
+
+                //设置特定列的初始化属性
+                columns: [
+                    { data: 'Name' },
+                    { data: 'PhoneNum' },
+                    {
+                        data: 'CreateDateTime',
+                        render: function (data, type, full, callback) {
+                            return new Date(parseInt(data.substr(6, 13))).toLocaleDateString();
+                        }
+                    },
+                    {
+                        data: 'VisitDate',
+                        render: function (data, type, full, callback) {
+                            return new Date(parseInt(data.substr(6, 13))).toLocaleDateString();
+                        }
+                    },
+                    { data: 'CommunityName' },
+                    { data: 'HouseAddress' },
+                    { data: 'Status' },
+                    { data: 'FollowAdminUserName' },
+                    {
+                        data: 'Id',
+                        render: function (data, type, full, callback) {
+                            return (' <a title="接单"  href="javascript:;"  data-id=' + data + ' class="ml-5 follow" style="text-decoration:none;color:green;"><i class="Hui-iconfont">&#xe670;</i> </a>   ')
+                        }
+                    }
+                ],
+
+                //添加回调函数
+                createdRow: function (row, data, index) {
+                    /* 设置表格中的内容居中 */
+                    $('td', row).attr("class", "text-c");//在row这个元素里面查找td,并添加样式
+                    if (data.Status == "已处理") {
+                        $('td', row).eq(8).empty();
+                    }
+
+                },
+
+                //使用ajax异步请求
+                ajax: {
+                    type: 'POST',
+                    url: '@Url.Action("GetList", "HouseAppointment")',
+                    //发送给服务器的数据
+                    data: function (d) {
+                        params.start = d.start;//开始的序号
+                        params.length = d.length;//要取的数据的条数
+                        return params;//自定义需要传递的参数。
+                    }
+                }
+            });
+        }
+
+        //查看房源
+        $('.look').livequery('click', function () {
+            alert("自己实现！")
+        });
+
+        //接单
+        $(".follow").livequery('click', function () {
+            var id = $(this).attr("data-id");
+            layer.confirm('确认接单？', { icon: 3, title: '提示' }, function () {
+                $.post("@Url.Action("Follow", "HouseAppointment")", { id: id },  function (data) {
+                    if (data.State == 1) {
+                        layer.msg(data.ErrorMessage, {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg(data.ErrorMessage, { icon: 2 });
+                    }
+                })
+            });
+        });
+
+
+
+    </script>
+}
+
